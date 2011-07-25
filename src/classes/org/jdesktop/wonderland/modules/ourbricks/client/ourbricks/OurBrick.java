@@ -8,13 +8,12 @@ import java.math.BigDecimal;
 
 /**
  *
+ * Attribute names do not follow Java convention because they are mirroring
+ * the output of the http://ourbricks.com API
  * @author jos
  */
-public class OurBrick {
 
-    public OurBrick() {
-    }
-
+// Output example
 //    {
 //        "prev_start": null,
 //        "items": [
@@ -32,10 +31,10 @@ public class OurBrick {
 //        "next_start": 1
 //    }
 
-    //These would be soemthing like an OurBricksLsit!
-//    private int prev_start;
-//    private List items;
-//    private int next_start;
+public class OurBrick {
+
+    public OurBrick() {
+    }
 
     private BigDecimal price;
     private String thumbnail_link;

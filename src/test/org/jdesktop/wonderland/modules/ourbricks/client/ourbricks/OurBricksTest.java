@@ -12,20 +12,7 @@ import org.junit.Test;
  */
 public class OurBricksTest {
 
-    public OurBricksTest() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-
-    @Test
-    public void createGsonObject(){
-        Gson gsonObject = new Gson();
-        assertNotNull(gsonObject);
-
-        String response = "" +
+    static final String JSONresponse = "" +
                 " {   \"price\": null, " +
                 " \"thumbnail_link\": \"http://vu.ourbricks.com/6e2dd650eaa7832d88f4e8b70e3db611/processed/ourbricksThumb.jpg\", " +
                 " \"username\": \"danx0r\", " +
@@ -38,7 +25,17 @@ public class OurBricksTest {
                 " \"id\": \"6e2dd650eaa7832d88f4e8b70e3db611\" " +
                 " } ";
 
-        OurBrick brick = gsonObject.fromJson(response, OurBrick.class);
+    @Before
+    public void setUp() {
+    }
+
+
+    @Test
+    public void createGsonObject(){
+        Gson gsonObject = new Gson();
+        assertNotNull(gsonObject);
+
+        OurBrick brick = gsonObject.fromJson(JSONresponse, OurBrick.class);
         assertTrue((brick.getTitle()).equals("kataspace main scene"));
     }
 }

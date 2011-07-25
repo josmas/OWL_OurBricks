@@ -28,7 +28,7 @@ public class OurBricksURLGatewayTest {
     @Test
     public void testrestGETConnection() throws Exception {
 
-//        String response = gateway.ourBricksGETConnection(new URL(getURL)));
+//        String response = gateway.ourBricksGETConnection(new URL(getURL));
 //        System.out.println("The response is: " + response);
 
         when(mockedGateway.ourBricksGETConnection(new URL(getURL)))

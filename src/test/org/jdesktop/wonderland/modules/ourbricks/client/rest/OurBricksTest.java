@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.jdesktop.wonderland.modules.ourbricks.client.rest;
 
 import static org.junit.Assert.*;
 import com.google.gson.Gson;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBrick;
 import org.junit.Before;
 import org.junit.Test;
 

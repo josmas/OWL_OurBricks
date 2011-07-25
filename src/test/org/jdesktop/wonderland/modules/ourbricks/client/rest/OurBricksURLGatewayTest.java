@@ -1,6 +1,8 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.rest;
 
 import java.net.URL;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGateway;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import org.junit.Before;

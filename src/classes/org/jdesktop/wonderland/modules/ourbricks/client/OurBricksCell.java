@@ -19,7 +19,7 @@ import org.jdesktop.wonderland.client.contextmenu.spi.ContextMenuFactorySPI;
 import org.jdesktop.wonderland.client.scenemanager.event.ContextEvent;
 import org.jdesktop.wonderland.common.cell.CellID;
 import org.jdesktop.wonderland.common.cell.CellStatus;
-import org.jdesktop.wonderland.modules.ourbricks.client.rest.OurBricksURLGateway;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 import org.jdesktop.wonderland.modules.ourbricks.common.OurBricksCellClientState;
 
 //TODO this cell will likely be changed to a Swing app

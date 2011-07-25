@@ -1,4 +1,4 @@
-package org.jdesktop.wonderland.modules.ourbricks.client.rest;
+package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import static org.junit.Assert.*;
 import com.google.gson.Gson;

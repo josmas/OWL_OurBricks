@@ -1,4 +1,4 @@
-package org.jdesktop.wonderland.modules.ourbricks.client.rest;
+package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import java.net.URL;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGateway;

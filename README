@@ -1,0 +1,41 @@
+------------------------
+-- OurBricks module   --
+------------------------
+
+This module connects to the Ourbricks.com API and provides an automated way of
+searching for models and upload them directly to Open Wonderland through an
+inworld GUI.
+
+----------------------------------------------
+Classpaths and expected structure for Netbeans
+----------------------------------------------
+
+This module will need little modifications if it is downloaded (or cloned) in a structure 
+that resembles the following 'my-own-wonderland-modules' directory.  Please note that for 
+module development, the sources of Open Wonderland have to be available locally.
+
+If you have your Wonderland sources in your user directory, the expected structure should
+look like:
+
+~/wonderland
+	| [loads of stuff here]
+
+~/wonderland-modules
+	|
+	--> stable
+	|	| [modules here]
+	|
+	--> unstable
+		| [modules here]
+
+~/my-own-wonderland-modules
+	|
+	--> unstable
+		|
+		--> rest-module-sample
+
+If you drop the module in that last directory (or a similar structure but with your own names)
+then all the classpaths should be ready to go. If not, follow the instructions in the tutorial
+to change your settings for Netbeans.
+
+Jos (July 2o11)

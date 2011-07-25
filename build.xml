@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${module-name}" default="dist" basedir=".">
+    <property file="my.module.properties"/>
+
+    <!-- current directory needed in all scripts -->
+    <dirname property="current.dir" file="${ant.file.wonderland-${module.name}-module}"/>
+    <property name="modules.dir" location="${wonderland.dir}/modules"/>
+        
+    <property name="module.src" value="${module.plugin.src}"/>
+    <property name="module.jarname" value="${module.name}"/>
+    
+    <!-- import common build file -->
+    <import file="${modules.dir}/build-tools/build-scripts/module-build.xml"/>
+
+    <pathconvert property="module-client.classpath">
+        <path location="${current.dir}/lib/gson-1.7.1.jar"/>
+    </pathconvert>
+       
+    <target name="build" depends="-module-init, -module-compile-common, 
+                                                -module-compile-server,
+                                                -module-compile-client"/>
+    
+    <target name="dist" depends="build">
+        <mkdir dir="${module.dist.dir}"/>
+        
+        <module name="${module.name}" majorVersion="${module.version.major}" minorVersion="${module.version.minor}" jarfile="${module.dist.dir}/${module.jarname}.jar"
+                moduleDescription="${module.description}" builddir="${build.dir}">
+                    
+	    <client dir="${current.dir}/lib">
+                <include name="gson-1.7.1.jar"/>
+                <clientjar name="${module.name}-client" basedir="${build.classes.dir}">
+                    <include name="${module.src}/client/**"/>
+                    <include name="${module.src}/common/**"/>
+                    <fileset dir="${current.dir}/src/classes">
+                        <include name="${module.src}/client/**/*.properties"/>
+                    </fileset>
+                </clientjar> 
+	    </client>
+                
+	    <server>
+                <serverjar name="${module.name}-server" basedir="${build.classes.dir}">
+                    <include name="${module.src}/server/**"/>
+                    <include name="${module.src}/common/**"/>
+                </serverjar>
+            </server>
+            <art dir="${current.dir}/art"/>
+        </module>
+    </target>                                  
+                                           
+    <target name="deploy" depends="dist, -module-deploy"/>
+    <target name="clean" depends="-module-clean"/>
+
+
+    <property name="test.lib" value="lib_test" />
+    <property name="test.classes" value="src/test" />
+    <property name="test.compiled.classes" value="build/test" />
+
+
+    <path id="test.classpath">
+        <pathelement location="${test.compiled.classes}" />
+        <pathelement location="${build.classes.dir}" />
+        <fileset dir="${test.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+       <!-- <fileset dir="${wonderland.dir}/core/build/lib">
+            <include name="**/*.jar"/>
+        </fileset>-->
+    </path>
+
+    <target name="compile-tests" depends="build">
+        <mkdir dir="${test.compiled.classes}"/>
+        <javac srcdir="${test.classes}" destdir="${test.compiled.classes}">
+            <classpath refid="test.classpath"/>
+        </javac>
+        <copy todir="build/classes/org/jdesktop/wonderland/modules/ourbricks/client">
+            <fileset dir="src/classes/org/jdesktop/wonderland/modules/ourbricks/client/" />
+        </copy>
+    </target>
+
+    <target name="test" depends="compile-tests">
+        <junit fork="yes" haltonfailure="yes">
+            <formatter type="plain" usefile="false" />
+            <classpath refid="test.classpath" />
+            <batchtest>
+                <fileset dir="${test.compiled.classes}" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+
+</project>

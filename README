@@ -38,4 +38,14 @@ If you drop the module in that last directory (or a similar structure but with y
 then all the classpaths should be ready to go. If not, follow the instructions in the tutorial
 to change your settings for Netbeans.
 
+
+------------------------
+-- Usage              --
+------------------------
+Usage is as per normal Open Wonderland modules use; more info at http://openwonderland.org
+
+To execute the unit test just type: ant test
+
+If any of the tests fail or you see anything weird in the code please DO get in touch!
+
 Jos (July 2o11)

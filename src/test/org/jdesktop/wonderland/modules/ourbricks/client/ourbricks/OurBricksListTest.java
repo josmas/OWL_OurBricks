@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import com.google.gson.Gson;
@@ -22,6 +17,8 @@ public class OurBricksListTest {
             " { " +
                 " \"prev_start\": null, " +
                 " \"items\": [ " +
+                OurBricksTest.JSONresponse +
+                " , " +
                 OurBricksTest.JSONresponse +
                 " ], " +
                 " \"next_start\": 1 " +
@@ -49,6 +46,8 @@ public class OurBricksListTest {
         assertTrue(1 == brickList.getNext_start().intValue());
         OurBrick brick = brickList.getItems().get(0);
         assertTrue((brick.getTitle()).equals("kataspace main scene"));
+        brick = brickList.getItems().get(1);
+        assertTrue((brick.getLicense_code()).equals("ccby"));
 
     }
 

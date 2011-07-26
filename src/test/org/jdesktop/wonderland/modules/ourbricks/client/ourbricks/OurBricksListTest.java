@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class OurBricksListTest {
 
-    private String JSONresponse =
+    static final String JSONListResponse =
 
             " { " +
                 " \"prev_start\": null, " +
@@ -41,7 +41,7 @@ public class OurBricksListTest {
         Gson gsonObject = new Gson();
         assertNotNull(gsonObject);
 
-        OurBricksList brickList = gsonObject.fromJson(JSONresponse, OurBricksList.class);
+        OurBricksList brickList = gsonObject.fromJson(JSONListResponse, OurBricksList.class);
         assertNull(brickList.getPrev_start());
         assertTrue(1 == brickList.getNext_start().intValue());
         OurBrick brick = brickList.getItems().get(0);

@@ -70,18 +70,8 @@ public class OurBricksHUD {
      * @return panelForHUD
      */
     private JPanel createPanelForHUD() {
-        //TODO: can I Test Drive it with windowlicker?
-        JPanel panelForHUD = new JPanel();
-
-        oneButton = new JButton("Click me! I am a button! :P");
-        oneButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                logger.warning("I'm gonna do nothing but you can keep on clicking!");
-            }
-        });
-        panelForHUD.add(oneButton);
-
-        return panelForHUD;
+        
+        return new OurBricksJPanel();
     }
 
     /**

@@ -11,11 +11,13 @@ import java.net.URL;
 public interface OurBricksGateway {
 
     /**
-     * A GET REST request is sent to the external OurBricks.com API service.
-     * An JSON reply is expected.
-     * @param remoteRestURL the URL and data to be accessed.
-     * @return String wrapping the JSON information read from the remote server.
+     * Get a list of OurBrick models and two handlers to a previous or next search
+     * if available.
+     * @param remoteURL the URL to be accessed.
+     * @return the list of type OurBricksList
+     * @throws MalformedURLException
+     * @throws IOException
      */
-    String ourBricksGETConnection(URL remoteURL) throws MalformedURLException, IOException;
+    public OurBricksList getBricksList(URL remoteURL) throws MalformedURLException, IOException;
 
 }

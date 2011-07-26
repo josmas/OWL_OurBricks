@@ -31,12 +31,12 @@ public class OurBricksURLGatewayTest {
 //        String response = gateway.ourBricksGETConnection(new URL(getURL));
 //        System.out.println("The response is: " + response);
 
-        when(mockedGateway.ourBricksGETConnection(new URL(getURL)))
-                .thenReturn("{\"mocking\" : \"On\"}");
+//        when(mockedGateway.getBricksList(new URL(getURL)))
+//                .thenReturn("{\"mocking\" : \"On\"}");
 
-        mockedGateway.ourBricksGETConnection(new URL(getURL));
+        mockedGateway.getBricksList(new URL(getURL));
 
-        verify(mockedGateway).ourBricksGETConnection(new URL(getURL));
+        verify(mockedGateway).getBricksList(new URL(getURL));
 //        //I don't understand very well this; if I stub a return, then asserting
 //        //does not make much sense, so I guess here we want to verify that the
 //        //call was done? Have to read more about mocks. Same for POST
@@ -45,7 +45,7 @@ public class OurBricksURLGatewayTest {
     @Test
     public void testExceptionGETConnection(){
         try{
-            gateway.ourBricksGETConnection(new URL("malformedURL"));
+            gateway.getBricksList(new URL("malformedURL"));
             fail("Exception expected");
         }
         catch (Exception e){

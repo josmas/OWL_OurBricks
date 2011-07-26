@@ -31,7 +31,7 @@ public class OurBricksPlugin extends BaseClientPlugin {
      */
     @Override
     public void initialize(ServerSessionManager loginInfo) {
-        ourBricksHUDMI = new JCheckBoxMenuItem("Sample HUD");
+        ourBricksHUDMI = new JCheckBoxMenuItem("OurBricks");
         ourBricksHUDMI.setSelected(false);
         ourBricksHUDMI.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

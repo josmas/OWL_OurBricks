@@ -11,15 +11,52 @@
 
 package org.jdesktop.wonderland.modules.ourbricks.client;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGateway;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksFAKEGateway;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
+
 /**
  *
  * @author jos
  */
 public class OurBricksJPanel extends javax.swing.JPanel {
 
+    //TODO I'm accesing all this data from the view instead of sending it to it???
+    private OurBricksGateway gate;
+    private OurBricksList bricksList;
+
     /** Creates new form OurBricksJPanel */
     public OurBricksJPanel() {
         initComponents();
+        try {
+            requestDataFromExternalService(); //On error just return an empty list for now.
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            bricksList = new OurBricksList();
+        } catch (IOException ex) {
+            Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            bricksList = new OurBricksList();
+        }
+        setButtonsNames();
+    }
+    
+    private void requestDataFromExternalService() throws MalformedURLException, IOException {
+        //TODO this will have to be using a real connection on deployment
+        gate = new OurBricksFAKEGateway();
+        bricksList = gate.getBricksList(null);
+    }
+
+    private void setButtonsNames(){
+        if (bricksList.getItems().isEmpty()){
+        }
+        else{
+            jButton1.setText(bricksList.getItems().get(0).getTitle());
+            jButton2.setText(bricksList.getItems().get(1).getTitle());
+        }
     }
 
     /** This method is called from within the constructor to
@@ -49,6 +86,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         setAutoscrolls(true);
 
         jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jButton1);
 
         jButton2.setText("jButton2");
@@ -172,6 +214,10 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

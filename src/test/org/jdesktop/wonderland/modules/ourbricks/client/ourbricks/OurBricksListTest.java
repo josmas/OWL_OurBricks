@@ -1,5 +1,8 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import com.google.gson.Gson;
 import org.junit.After;
 import org.junit.Before;
@@ -23,9 +26,13 @@ public class OurBricksListTest {
                 " ], " +
                 " \"next_start\": 1 " +
             " } ";
+    Gson gsonObject;
+    OurBricksList brickList;
 
     @Before
     public void setUp() {
+        gsonObject = new Gson();
+        brickList = gsonObject.fromJson(JSONListResponse, OurBricksList.class);
     }
 
     @After
@@ -37,11 +44,8 @@ public class OurBricksListTest {
     public void OurBricksListCreationTest(){
         OurBricksList bricksList = new OurBricksList();
         assertNotNull(bricksList);
-        
-        Gson gsonObject = new Gson();
         assertNotNull(gsonObject);
 
-        OurBricksList brickList = gsonObject.fromJson(JSONListResponse, OurBricksList.class);
         assertNull(brickList.getPrev_start());
         assertTrue(1 == brickList.getNext_start().intValue());
         OurBrick brick = brickList.getItems().get(0);
@@ -49,6 +53,17 @@ public class OurBricksListTest {
         brick = brickList.getItems().get(1);
         assertTrue((brick.getLicense_code()).equals("ccby"));
 
+    }
+
+    @Test
+    public void OurBricksListIteration() throws MalformedURLException, IOException{
+
+        int i = 0;
+        for (final OurBrick brick : brickList.getItems()) {
+            i++;
+        }
+        assertTrue( i == 2);
+        assertTrue( brickList.getItems().size() == 2 );
     }
 
 }

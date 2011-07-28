@@ -1,8 +1,6 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import java.net.URL;
-import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGateway;
-import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -28,8 +26,9 @@ public class OurBricksURLGatewayTest {
     @Test
     public void testrestGETConnection() throws Exception {
 
-//        String response = gateway.ourBricksGETConnection(new URL(getURL));
-//        System.out.println("The response is: " + response);
+        for (OurBrick brick : gateway.getBricksList(new URL ("http://ourbricks.com/api/search?q=truck")).getItems()) {
+            System.out.println("The title is: " + brick.getTitle());
+        }
 
 //        when(mockedGateway.getBricksList(new URL(getURL)))
 //                .thenReturn("{\"mocking\" : \"On\"}");
@@ -52,5 +51,4 @@ public class OurBricksURLGatewayTest {
             //ignore
         }
     }
-
 }

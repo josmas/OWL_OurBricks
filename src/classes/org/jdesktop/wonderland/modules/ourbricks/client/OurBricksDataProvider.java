@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBrick;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGateway;
@@ -25,16 +26,17 @@ public class OurBricksDataProvider {
         return bricksList;
     }
     
-    static void setButtonData(OurBricksList bricksList, JButton [] buttonArray) {
+    static void setButtonData(OurBricksList bricksList, final JButton [] buttonArray, final JLabel [] labelArray) {
         int i = 0;
         for (final OurBrick brick : bricksList.getItems()) {
             final int finalI = i;
-            final JButton[] finalButtonArray = buttonArray;
 
             SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
-                    JButton jButton = finalButtonArray[finalI];
+                    JButton jButton = buttonArray[finalI];
+                    JLabel jLabel = labelArray[finalI];
+                    jLabel.setText(brick.getTitle());
                     jButton.setText(brick.getTitle());
                     jButton.setIcon(new javax.swing.JLabel() {
 

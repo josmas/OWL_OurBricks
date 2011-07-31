@@ -46,6 +46,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         }
         addButtonsAndLabelsToArray();
         OurBricksDataProvider.setButtonData(bricksList, buttonArray, labelArray);
+        enableNavigation();
     }
 
     /**
@@ -57,6 +58,23 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
         labelArray[0] = jLabel1; labelArray[1] = jLabel2; labelArray[2] = jLabel3;
         labelArray[3] = jLabel4; labelArray[4] = jLabel5;
+    }
+
+    private void enableNavigation(){
+        
+        if (bricksList.getNext_start() != null){
+            next.setEnabled(true);
+        }
+        else {
+            next.setEnabled(false);
+        }
+
+        if (bricksList.getPrev_start() != null){
+            previous.setEnabled(true);
+        }
+        else {
+            previous.setEnabled(false);
+        }
     }
     
     /** This method is called from within the constructor to
@@ -72,8 +90,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        next = new javax.swing.JButton();
+        previous = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabelSearch = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -121,9 +139,9 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton11.setText("Next");
+        next.setText("Next");
 
-        jButton12.setText("Previous");
+        previous.setText("Previous");
 
         jButton1.setText("jButton1");
         jButton1.setMaximumSize(new java.awt.Dimension(200, 133));
@@ -190,7 +208,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabelSearch)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton12))))
+                            .addComponent(previous))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton6)
@@ -198,7 +216,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton11)
+                            .addComponent(next)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,7 +224,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton11, jButton12});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {next, previous});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,8 +255,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel4))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton12)
-                    .addComponent(jButton11))
+                    .addComponent(previous)
+                    .addComponent(next))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -276,7 +294,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         //TODO this is no good cause the dowload is of a zip file and no cell seems
         // to handle it... ask in the forum and check the snapshot code
         try {
-            URLDataFlavorHandler.launchCellFromURL( new URL(urlOfModel) );
+//            URLDataFlavorHandler.launchCellFromURL( new URL(urlOfModel) );
         }
         catch (Exception e){
             //TODO HANDLE ME NOW!!!!!!!!!!!!!!
@@ -287,8 +305,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -301,6 +317,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton next;
+    private javax.swing.JButton previous;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1,7 +1,31 @@
 Tasks
 -----
 Create a GUI (Swing wonderland app) for the search.
+  - Going with a HUD for now; if it does not work will go back to a Swing app
+    - Add tasks here for later
+
+Search:
+Limiting the search to 5 results. If there are more, the field next_start will
+have an integer value so we can use that to enable the 'Next' button.
+If prev_start is not null, previous results are available (these should be
+cached instead of creating another search). This can be used to enable the
+'Previous' button.
+
+  Initial search: http://ourbricks.com/api/search?start=5&limit=5
+    - If there are more results --> next search
+      http://ourbricks.com/api/search?start=5&limit=5
+    - Previous search should be cached.
+
 
 Tests
 -----
 Make sense of the use of Mocks for the connection to the web server.
+
+
+WorkFlow out of Wonderland: To make things easier, instead of deploying every
+single change to an OWL server I am running the JPanel on its own using the
+class:
+java -cp .:../../lib/gson-1.7.1.jar
+org/jdesktop/wonderland/modules/ourbricks/client/TestJPanelExecutable
+
+from the build/classes directory.

@@ -35,8 +35,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     public OurBricksJPanel() {
         
         initComponents();
+        search(null);
+        
+    }
+
+    private void search(String query){
         try {
-            bricksList = OurBricksDataProvider.requestDataFromExternalService(); //On error just return an empty list for now.
+            bricksList = OurBricksDataProvider.requestDataFromExternalService(query); //On error just return an empty list for now.
         } catch (MalformedURLException ex) {
             Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
             bricksList = new OurBricksList();
@@ -94,8 +99,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         previous = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabelSearch = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -155,16 +160,16 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
         jLabelSearch.setText("Search for Models:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchTextFieldActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Search");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                searchButtonActionPerformed(evt);
             }
         });
 
@@ -207,11 +212,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelSearch)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(previous))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
+                    .addComponent(searchButton)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
@@ -234,11 +239,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelSearch)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton6)
+                        .addComponent(searchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,16 +284,28 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         downloadModel( bricksList.getItems().get(1).getDownload_link() );
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
         // TODO add your handling code here:
         System.out.println("A search will happen at some stage!");
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        handleSearch();
+    }//GEN-LAST:event_searchTextFieldActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
 
         // TODO add your handling code here:
         System.out.println("Same as hiting enter in search box!!!");
-    }//GEN-LAST:event_jButton6ActionPerformed
+        handleSearch();
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void handleSearch(){
+        System.out.println("lalala");
+        if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
+
+            System.out.println("Should launch another search!" + searchTextField.getText());
+            search(searchTextField.getText());
+        }
+
+    }
 
     private void downloadModel(String urlOfModel){
         //TODO this is no good cause the dowload is of a zip file and no cell seems
@@ -309,16 +326,16 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelSearch;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton next;
     private javax.swing.JButton previous;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 
 }

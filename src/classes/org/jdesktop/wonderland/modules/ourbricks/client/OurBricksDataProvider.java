@@ -13,20 +13,25 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGa
 
 public class OurBricksDataProvider {
     
-    public static OurBricksList requestDataFromExternalService(String query) throws MalformedURLException, IOException {
+    public static OurBricksList requestDataFromExternalService(String query, Integer next) throws MalformedURLException, IOException {
         OurBricksGateway gate;
         OurBricksList bricksList;
         //TODO Pass gateway and URL as parameters
 //        gate = new OurBricksFAKEGateway();
 //        bricksList = gate.getBricksList(null);
         URL searchURL;
-        if (query == null)
+        if ( query == null && next == null ){
             searchURL = new URL("http://ourbricks.com/api/search?limit=5");
-        else{
+        } else if ( query == null && next != null ){
+            searchURL = new URL("http://ourbricks.com/api/search?&start=" + next + "&limit=5");
+        } else if ( query != null && next == null ){
             searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&limit=5");
-        }
+        } else {
+            searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&start=" + next + "&limit=5");
+        } 
 
         gate = new OurBricksURLGateway();
+        System.out.println("Search URL is: " + searchURL);
         bricksList = gate.getBricksList(searchURL);
 
         return bricksList;

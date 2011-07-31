@@ -35,13 +35,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     public OurBricksJPanel() {
         
         initComponents();
-        search(null);
+        search(null, null);
         
     }
 
-    private void search(String query){
+    private void search(String query, Integer next){
         try {
-            bricksList = OurBricksDataProvider.requestDataFromExternalService(query); //On error just return an empty list for now.
+            bricksList = OurBricksDataProvider.requestDataFromExternalService(query, next); //On error just return an empty list for now.
         } catch (MalformedURLException ex) {
             Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
             bricksList = new OurBricksList();
@@ -52,6 +52,15 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         addButtonsAndLabelsToArray();
         OurBricksDataProvider.setButtonData(bricksList, buttonArray, labelArray);
         enableNavigation();
+    }
+
+    private void searchNext(){
+        System.out.println("The value of searchTextField.getText() is : " + searchTextField.getText());
+        //TODO deal with http://ourbricks.com/api/search?q=truck&start=1&limit=5
+        if (searchTextField.getText() == null || searchTextField.getText().equals(""))
+            search(null, bricksList.getNext_start());
+        else
+            search(searchTextField.getText(), bricksList.getNext_start());
     }
 
     /**
@@ -106,6 +115,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        allModels = new javax.swing.JButton();
 
         setAutoscrolls(true);
 
@@ -145,8 +155,18 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         });
 
         next.setText("Next");
+        next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextActionPerformed(evt);
+            }
+        });
 
         previous.setText("Previous");
+        previous.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previousActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("jButton1");
         jButton1.setMaximumSize(new java.awt.Dimension(200, 133));
@@ -183,6 +203,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
         jLabel5.setText("no model found");
 
+        allModels.setText("All Models");
+        allModels.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allModelsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,8 +242,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(previous))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
@@ -225,8 +251,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(searchButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(allModels)
+                        .addGap(208, 208, 208))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {next, previous});
@@ -243,7 +274,9 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(searchButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchButton)
+                            .addComponent(allModels))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,24 +318,29 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
-        // TODO add your handling code here:
-        System.out.println("A search will happen at some stage!");
         handleSearch();
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-
-        // TODO add your handling code here:
-        System.out.println("Same as hiting enter in search box!!!");
         handleSearch();
     }//GEN-LAST:event_searchButtonActionPerformed
 
-    private void handleSearch(){
-        System.out.println("lalala");
-        if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
+    private void previousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_previousActionPerformed
 
-            System.out.println("Should launch another search!" + searchTextField.getText());
-            search(searchTextField.getText());
+    private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
+        searchNext();
+    }//GEN-LAST:event_nextActionPerformed
+
+    private void allModelsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allModelsActionPerformed
+        searchTextField.setText("");
+        search(null, null);
+    }//GEN-LAST:event_allModelsActionPerformed
+
+    private void handleSearch(){
+        if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
+            search(searchTextField.getText(), null);
         }
 
     }
@@ -321,6 +359,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton allModels;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

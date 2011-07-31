@@ -7,15 +7,6 @@ Create a GUI (Swing wonderland app) for the search.
 Search:
 Limiting the search to 5 results. If there are more, the field next_start will
 have an integer value so we can use that to enable the 'Next' button.
-If prev_start is not null, previous results are available (these should be
-cached instead of creating another search). This can be used to enable the
-'Previous' button.
-
-  Initial search: http://ourbricks.com/api/search?start=5&limit=5
-    - If there are more results --> next search
-      http://ourbricks.com/api/search?start=5&limit=5
-    - Previous search should be cached.
-
 
 Tests
 -----

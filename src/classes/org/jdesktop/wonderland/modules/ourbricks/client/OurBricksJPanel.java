@@ -54,13 +54,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         enableNavigation();
     }
 
-    private void searchNext(){
+    private void searchFromOffset(Integer offset){
         System.out.println("The value of searchTextField.getText() is : " + searchTextField.getText());
         //TODO deal with http://ourbricks.com/api/search?q=truck&start=1&limit=5
         if (searchTextField.getText() == null || searchTextField.getText().equals(""))
-            search(null, bricksList.getNext_start());
+            search(null, offset);
         else
-            search(searchTextField.getText(), bricksList.getNext_start());
+            search(searchTextField.getText(), offset);
     }
 
     /**
@@ -326,11 +326,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void previousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousActionPerformed
-        // TODO add your handling code here:
+        searchFromOffset(bricksList.getPrev_start());
     }//GEN-LAST:event_previousActionPerformed
 
     private void nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        searchNext();
+        searchFromOffset(bricksList.getNext_start());
     }//GEN-LAST:event_nextActionPerformed
 
     private void allModelsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allModelsActionPerformed

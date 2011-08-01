@@ -47,6 +47,9 @@ public class OurBricksDataProvider {
                 public void run() {
                     JButton jButton = buttonArray[finalI];
                     JLabel jLabel = labelArray[finalI];
+                    //TODO: highlight paid models
+                    if (brick.getPrice() != null)
+                        System.out.println(brick.getTitle() + " is a paid model!");
                     jLabel.setText(brick.getTitle());
                     jButton.setText(brick.getTitle());
                     jButton.setIcon(new javax.swing.JLabel() {

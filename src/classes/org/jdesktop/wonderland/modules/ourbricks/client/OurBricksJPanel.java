@@ -11,13 +11,16 @@
 
 package org.jdesktop.wonderland.modules.ourbricks.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import org.jdesktop.wonderland.client.jme.dnd.FileListDataFlavorHandler;
 import org.jdesktop.wonderland.client.jme.dnd.URLDataFlavorHandler;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
 
@@ -434,7 +437,14 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         //TODO this is no good cause the dowload is of a zip file and no cell seems
         // to handle it... ask in the forum and check the snapshot code
         try {
-//            URLDataFlavorHandler.launchCellFromURL( new URL(urlOfModel) );
+            System.out.println("Trying to upload the model");
+            //TODO these hardcoded dae files will have to be searched on after
+            // downloading the ourbricks.zip file to a /tmp/ local location.
+            File daeFile = new File("/tmp/ourbricks/models/tmp_Boy_sBike.dae");
+            File daeFile2 = new File("/tmp/ourbricks/car/oshkosh_m-atv.dae");
+            List<File> fileList = new ArrayList<File>();
+            fileList.add(daeFile2);
+            FileListDataFlavorHandler.importFile(fileList, true, null);
         }
         catch (Exception e){
             //TODO HANDLE ME NOW!!!!!!!!!!!!!!

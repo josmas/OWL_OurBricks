@@ -1,6 +1,7 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -63,6 +64,10 @@ public class OurBricksFAKEGateway implements OurBricksGateway {
      */
     public OurBricksList getBricksList(URL remoteURL) throws MalformedURLException, IOException{
         return (new Gson()).fromJson(ourBricksGETConnection(remoteURL), OurBricksList.class);
+    }
+
+    public File getBrickFile(URL remoteURL, String modelName) throws MalformedURLException, IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

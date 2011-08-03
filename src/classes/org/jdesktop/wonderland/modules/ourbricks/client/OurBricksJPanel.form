@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
@@ -62,7 +62,7 @@
                   <Component id="searchTextField" min="-2" pref="193" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="searchButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="361" max="32767" attributes="0"/>
+                  <EmptySpace pref="398" max="32767" attributes="0"/>
                   <Component id="allModels" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
               </Group>
@@ -169,7 +169,7 @@
                               <Component id="next" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="button4Panel" linkSize="8" alignment="0" min="-2" max="-2" attributes="1"/>
+                      <Component id="button4Panel" linkSize="8" alignment="0" min="-2" pref="172" max="-2" attributes="1"/>
                   </Group>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
@@ -326,6 +326,9 @@
                   <Dimension value="[200, 133]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -26,9 +26,9 @@ public class OurBricksURLGatewayTest {
     @Test
     public void testrestGETConnection() throws Exception {
 
-        for (OurBrick brick : gateway.getBricksList(new URL ("http://ourbricks.com/api/search?q=truck")).getItems()) {
-            System.out.println("The title is: " + brick.getTitle());
-        }
+//        for (OurBrick brick : gateway.getBricksList(new URL ("http://ourbricks.com/api/search?q=truck")).getItems()) {
+//            System.out.println("The title is: " + brick.getTitle());
+//        }
 
 //        when(mockedGateway.getBricksList(new URL(getURL)))
 //                .thenReturn("{\"mocking\" : \"On\"}");
@@ -50,5 +50,12 @@ public class OurBricksURLGatewayTest {
         catch (Exception e){
             //ignore
         }
+    }
+
+    //TODO this test is dependent of a local server <-- mock the gateway and test
+    //this at the level of the Data Provider class
+    @Test
+    public void testGetBrickFile() throws Exception {
+        gateway.getBrickFile(new URL("http://localhost/drupal/ourbricks.zip"), "scene2");
     }
 }

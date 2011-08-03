@@ -163,7 +163,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 361, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 398, Short.MAX_VALUE)
                 .addComponent(allModels)
                 .addGap(63, 63, 63))
         );
@@ -254,6 +254,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jButton3.setMaximumSize(new java.awt.Dimension(200, 133));
         jButton3.setMinimumSize(new java.awt.Dimension(200, 133));
         jButton3.setPreferredSize(new java.awt.Dimension(200, 133));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout button3PanelLayout = new javax.swing.GroupLayout(button3Panel);
         button3Panel.setLayout(button3PanelLayout);
@@ -269,7 +274,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         button3PanelLayout.setVerticalGroup(
             button3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(button3PanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3))
@@ -363,7 +368,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(previous)
                             .addComponent(next)))
-                    .addComponent(button4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -393,12 +398,12 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //TODO Change the harcoded item numbers
-        downloadModel( bricksList.getItems().get(0).getDownload_link() );
+        importModel( bricksList.getItems().get(0).getDownload_link() );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //TODO Change the harcoded item numbers
-        downloadModel( bricksList.getItems().get(1).getDownload_link() );
+        importModel( bricksList.getItems().get(1).getDownload_link() );
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
@@ -423,8 +428,12 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_allModelsActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        importModel( bricksList.getItems().get(3).getDownload_link() );
 }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        importModel( bricksList.getItems().get(3).getDownload_link() );
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void handleSearch(){
         if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
@@ -433,10 +442,19 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     }
 
-    private void downloadModel(String urlOfModel){
-        //TODO this is no good cause the dowload is of a zip file and no cell seems
-        // to handle it... ask in the forum and check the snapshot code
+    private void importModel(String urlOfModel){
+        
         try {
+            //First download the model to a temp location
+            //TODO If I provide a dae file here I would good to go and offload all
+            //responsibility to the data provider class
+            File zipFile = OurBricksDataProvider.requestFileFromExternalService(urlOfModel, urlOfModel);
+
+            //Second unzip the file - TODO
+            //Third search for the .dae file - TODO
+
+            //Fourth create the list for uploading as the harcoded ones down below
+
             System.out.println("Trying to upload the model");
             //TODO these hardcoded dae files will have to be searched on after
             // downloading the ourbricks.zip file to a /tmp/ local location.

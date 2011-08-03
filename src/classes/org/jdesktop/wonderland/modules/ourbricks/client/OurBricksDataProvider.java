@@ -1,5 +1,6 @@
 package org.jdesktop.wonderland.modules.ourbricks.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -96,5 +97,14 @@ public class OurBricksDataProvider {
                 }
             });
         }
+    }
+
+    public static File requestFileFromExternalService(String fileURL, String modelName) throws MalformedURLException, IOException {
+        File ourBricksFile = null;
+        OurBricksGateway gate = new OurBricksURLGateway();
+        
+        ourBricksFile = gate.getBrickFile(new URL(fileURL), modelName);
+
+        return ourBricksFile;
     }
 }

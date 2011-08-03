@@ -398,12 +398,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //TODO Change the harcoded item numbers
-        importModel( bricksList.getItems().get(0).getDownload_link() );
+        //importModel( bricksList.getItems().get(0).getDownload_link(), , bricksList.getItems().get(0).getTitle() );
+        importModel( "http://localhost/drupal/ourbricks.zip", "scene2" );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //TODO Change the harcoded item numbers
-        importModel( bricksList.getItems().get(1).getDownload_link() );
+        importModel( bricksList.getItems().get(1).getDownload_link(), bricksList.getItems().get(1).getTitle() );
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
@@ -428,11 +429,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_allModelsActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        importModel( bricksList.getItems().get(3).getDownload_link() );
+        importModel( bricksList.getItems().get(3).getDownload_link() , bricksList.getItems().get(3).getTitle() );
 }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        importModel( bricksList.getItems().get(3).getDownload_link() );
+        importModel( bricksList.getItems().get(2).getDownload_link(), bricksList.getItems().get(2).getTitle() );
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void handleSearch(){
@@ -442,31 +443,24 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     }
 
-    private void importModel(String urlOfModel){
+    private void importModel(String urlOfModel, String modelName){
         
         try {
-            //First download the model to a temp location
-            //TODO If I provide a dae file here I would good to go and offload all
-            //responsibility to the data provider class
-            File zipFile = OurBricksDataProvider.requestFileFromExternalService(urlOfModel, urlOfModel);
+            File fileToImport = OurBricksDataProvider.fileToImport(urlOfModel, modelName);
 
-            //Second unzip the file - TODO
-            //Third search for the .dae file - TODO
-
-            //Fourth create the list for uploading as the harcoded ones down below
-
-            System.out.println("Trying to upload the model");
-            //TODO these hardcoded dae files will have to be searched on after
-            // downloading the ourbricks.zip file to a /tmp/ local location.
-            File daeFile = new File("/tmp/ourbricks/models/tmp_Boy_sBike.dae");
-            File daeFile2 = new File("/tmp/ourbricks/car/oshkosh_m-atv.dae");
-            List<File> fileList = new ArrayList<File>();
-            fileList.add(daeFile2);
-            FileListDataFlavorHandler.importFile(fileList, true, null);
+            if (fileToImport != null){
+                List<File> fileList = new ArrayList<File>();
+                fileList.add(fileToImport);
+                System.out.println("Trying to upload the model");
+                FileListDataFlavorHandler.importFile(fileList, true, null);
+            } else {
+                //TODO provide feedback to the user that the file is not available
+            }
         }
         catch (Exception e){
             //TODO HANDLE ME NOW!!!!!!!!!!!!!!
             //Malformed URL Exceptiopn and IOException
+            //TODO provide feedback to the user that the file is not available
             Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, e);
         }
     }

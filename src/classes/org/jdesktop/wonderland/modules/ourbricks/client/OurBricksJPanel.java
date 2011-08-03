@@ -397,9 +397,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //TODO Change the harcoded item numbers
-        //importModel( bricksList.getItems().get(0).getDownload_link(), , bricksList.getItems().get(0).getTitle() );
-        importModel( "http://localhost/drupal/ourbricks.zip", "scene2" );
+        importModel( bricksList.getItems().get(0).getDownload_link(), bricksList.getItems().get(0).getTitle() );
+//        importModel( "http://localhost/drupal/ourbricks.zip", "scene2" );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

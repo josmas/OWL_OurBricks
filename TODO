@@ -1,12 +1,21 @@
 Tasks
 -----
-Create a GUI (Swing wonderland app) for the search.
-  - Going with a HUD for now; if it does not work will go back to a Swing app
-    - Add tasks here for later
+X Create a GUI for the search.
+  - X Going with a HUD 
 
 Search:
-Limiting the search to 5 results. If there are more, the field next_start will
+X Limiting the search to 4 results. If there are more, the field next_start will
 have an integer value so we can use that to enable the 'Next' button.
+
+Download:
+Create a thread per download request so that the GUI does not block
+Modify search for the dae file: read path from JSON file
+
+User Feedback:
+Send back error messages to user when:
+  - Connection times out : no service available
+  - Model cannot be loaded : this one is going to be tricky
+
 
 Tests
 -----

@@ -44,7 +44,8 @@ public class OurBricksDataProvider {
 
         return bricksList;
     }
-    
+
+    //TODO this method is setting data in the view and does NOT belong to the data provider class
     static void setButtonData(OurBricksList bricksList, final JButton [] buttonArray, final JLabel [] labelArray) {
         int i = 0;
         for (final OurBrick brick : bricksList.getItems()) {

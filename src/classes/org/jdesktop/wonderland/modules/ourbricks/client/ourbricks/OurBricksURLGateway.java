@@ -57,7 +57,8 @@ public class OurBricksURLGateway implements OurBricksGateway {
      * @throws IOException
      */
     public OurBricksList getBricksList(URL remoteURL) throws MalformedURLException, IOException {
-        return (new Gson()).fromJson(ourBricksGETConnection(remoteURL), OurBricksList.class);
+        OurBricksList results = (new OurBricksCurator()).curateList((new Gson()).fromJson(ourBricksGETConnection(remoteURL), OurBricksList.class));
+        return results;
     }
 
     public File getBrickFile(URL remoteURL, String modelName) throws MalformedURLException, IOException {
@@ -91,4 +92,7 @@ public class OurBricksURLGateway implements OurBricksGateway {
         return result;
 
     }
+
 }
+
+

@@ -33,6 +33,12 @@ public class OurBricksList {
     private List<OurBrick> items = new ArrayList<OurBrick>();
     private Integer next_start;
 
+    public OurBricksList(Integer prev_start, List<OurBrick> items, Integer next_start){
+        this.prev_start = prev_start;
+        this.items = items;
+        this.next_start = next_start;
+    }
+
     public List<OurBrick> getItems() {
         return items;
     }
@@ -43,6 +49,10 @@ public class OurBricksList {
 
     public Integer getPrev_start() {
         return prev_start;
+    }
+
+    public boolean isEmpty(){
+        return this.items.isEmpty();
     }
 
     

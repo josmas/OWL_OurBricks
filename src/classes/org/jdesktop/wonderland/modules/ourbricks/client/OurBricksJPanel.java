@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * OurBricksJPanel.java
  *
  * Created on 26-Jul-2011, 11:29:03
@@ -29,12 +24,11 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGa
  * @author jos
  */
 public class OurBricksJPanel extends javax.swing.JPanel {
+    public static final int NUMBER_OF_BUTTONS = 4;
 
-    private OurBricksList bricksList;;
-    //TODO this hardcoded 4 should come from a constant and be used in OurBricksDataProvider
-    //TODO 4 is a magic number here too!
-    private JButton[] buttonArray = new JButton[4];
-    private JLabel[] labelArray = new JLabel[4];
+    private OurBricksList bricksList;
+    private JButton[] buttonArray = new JButton[NUMBER_OF_BUTTONS];
+    private JLabel[] labelArray = new JLabel[NUMBER_OF_BUTTONS];
     private final OurBricksDataProvider dataProvider;
 
     /** Creates new form OurBricksJPanel */

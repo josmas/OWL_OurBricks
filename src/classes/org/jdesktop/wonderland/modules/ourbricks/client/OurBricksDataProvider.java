@@ -20,6 +20,7 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
 public class OurBricksDataProvider {
+    public static final int SEARCH_LIMIT = 4;
 
     private final OurBricksGateway gate;
 
@@ -36,13 +37,13 @@ public class OurBricksDataProvider {
 //        bricksList = gate.getBricksList(null);
         URL searchURL;
         if ( query == null && next == null ){
-            searchURL = new URL("http://ourbricks.com/api/search?limit=4");
+            searchURL = new URL("http://ourbricks.com/api/search?limit=" + SEARCH_LIMIT);
         } else if ( query == null && next != null ){
-            searchURL = new URL("http://ourbricks.com/api/search?&start=" + next + "&limit=4");
+            searchURL = new URL("http://ourbricks.com/api/search?&start=" + next + "&limit=" + SEARCH_LIMIT);
         } else if ( query != null && next == null ){
-            searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&limit=4");
+            searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&limit=" + SEARCH_LIMIT);
         } else {
-            searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&start=" + next + "&limit=4");
+            searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&start=" + next + "&limit=" + SEARCH_LIMIT);
         } 
 
 //        gate = new OurBricksURLGateway();
@@ -86,9 +87,7 @@ public class OurBricksDataProvider {
         }
 
         //Reset buttons with no models found
-        //TODO this hardcoded 4 should come from a constant and be used in OurBricksJPanel
-        //TODO 4 is a magic number!!!!!
-        for (;i < 4; i++){
+        for (;i < SEARCH_LIMIT; i++){
             
             final int finalI = i;
             SwingUtilities.invokeLater(new Runnable() {

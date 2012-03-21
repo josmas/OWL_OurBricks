@@ -8,13 +8,30 @@ X Limiting the search to 4 results. If there are more, the field next_start will
 have an integer value so we can use that to enable the 'Next' button.
 
 Download:
-Create a thread per download request so that the GUI does not block
-Modify search for the dae file: read path from JSON file
+Create a thread per download request so that the GUI does not block: with this
+I mean using a Swingworker
+
+Modify search for the dae file: read path from JSON file (is the upload process and not the search?)
+
+Refine search
+  - Out of the list those that
+    X- price is not null
+    X- download_link is null
+
+  - In list but with warnings those that
+    - texture_ram > XX?MB
+
+
 
 User Feedback:
 Send back error messages to user when:
   - Connection times out : no service available
   - Model cannot be loaded : this one is going to be tricky
+
+Stand Alone functionality:
+  - have decided to use it standalone too:
+    - download the file to local (save as...)
+    - add a manifesto to the jar with OurBricksStandAlone as main class
 
 
 Tests
@@ -26,6 +43,7 @@ WorkFlow out of Wonderland: To make things easier, instead of deploying every
 single change to an OWL server I am running the JPanel on its own using the
 class:
 java -cp .:../../lib/gson-1.7.1.jar
-org/jdesktop/wonderland/modules/ourbricks/client/TestJPanelExecutable
+org/jdesktop/wonderland/modules/ourbricks/client/OurBricksStandAlone
 
-from the build/classes directory.
+from the build/classes directory. This will also be the default class to run
+stand alone

@@ -32,9 +32,6 @@ public class OurBricksDataProvider {
     protected OurBricksList requestDataFromExternalService(String query, Integer next) throws MalformedURLException, IOException {
         
         OurBricksList bricksList;
-        //TODO Pass gateway and URL as parameters //TODO at least the Gateway should be injected (constructor?)!
-//        gate = new OurBricksFAKEGateway();
-//        bricksList = gate.getBricksList(null);
         URL searchURL;
         if ( query == null && next == null ){
             searchURL = new URL("http://ourbricks.com/api/search?limit=" + SEARCH_LIMIT);
@@ -46,7 +43,6 @@ public class OurBricksDataProvider {
             searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&start=" + next + "&limit=" + SEARCH_LIMIT);
         } 
 
-//        gate = new OurBricksURLGateway();
         System.out.println("Search URL is: " + searchURL);
         bricksList = gate.getBricksList(searchURL);
 

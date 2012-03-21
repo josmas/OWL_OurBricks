@@ -6,16 +6,17 @@
 package org.jdesktop.wonderland.modules.ourbricks.client;
 
 import javax.swing.JPanel;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
 /**
  *
  * @author jos
  */
-public class TestJPanelExecutable extends javax.swing.JFrame {
+public class OurBricksStandAlone extends javax.swing.JFrame {
 
-    JPanel panel = new OurBricksJPanel();
+    JPanel panel = new OurBricksJPanel(new OurBricksURLGateway());
 
-    public TestJPanelExecutable() {
+    public OurBricksStandAlone() {
         this.setSize(1000, 400);
         this.add(panel);
         
@@ -24,7 +25,7 @@ public class TestJPanelExecutable extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TestJPanelExecutable().setVisible(true);
+                new OurBricksStandAlone().setVisible(true);
             }
         });
     }

@@ -5,8 +5,6 @@
 
 package org.jdesktop.wonderland.modules.ourbricks.client;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -15,6 +13,7 @@ import org.jdesktop.wonderland.client.hud.HUD;
 import org.jdesktop.wonderland.client.hud.HUDComponent;
 import org.jdesktop.wonderland.client.hud.HUDManagerFactory;
 import org.jdesktop.wonderland.client.hud.CompassLayout.Layout;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
 /**
  *
@@ -71,7 +70,7 @@ public class OurBricksHUD {
      */
     private JPanel createPanelForHUD() {
         
-        return new OurBricksJPanel();
+        return new OurBricksJPanel(new OurBricksURLGateway());
     }
 
     /**

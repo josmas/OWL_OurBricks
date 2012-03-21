@@ -20,11 +20,18 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
 public class OurBricksDataProvider {
+
+    private final OurBricksGateway gate;
+
+    public OurBricksDataProvider(OurBricksGateway gateway){
+
+        this.gate = gateway;
+    }
     
-    public static OurBricksList requestDataFromExternalService(String query, Integer next) throws MalformedURLException, IOException {
-        OurBricksGateway gate;
+    protected OurBricksList requestDataFromExternalService(String query, Integer next) throws MalformedURLException, IOException {
+        
         OurBricksList bricksList;
-        //TODO Pass gateway and URL as parameters
+        //TODO Pass gateway and URL as parameters //TODO at least the Gateway should be injected (constructor?)!
 //        gate = new OurBricksFAKEGateway();
 //        bricksList = gate.getBricksList(null);
         URL searchURL;
@@ -38,7 +45,7 @@ public class OurBricksDataProvider {
             searchURL = new URL("http://ourbricks.com/api/search?q=" + query + "&start=" + next + "&limit=4");
         } 
 
-        gate = new OurBricksURLGateway();
+//        gate = new OurBricksURLGateway();
         System.out.println("Search URL is: " + searchURL);
         bricksList = gate.getBricksList(searchURL);
 
@@ -46,7 +53,7 @@ public class OurBricksDataProvider {
     }
 
     //TODO this method is setting data in the view and does NOT belong to the data provider class
-    static void setButtonData(OurBricksList bricksList, final JButton [] buttonArray, final JLabel [] labelArray) {
+    protected void setButtonData(OurBricksList bricksList, final JButton [] buttonArray, final JLabel [] labelArray) {
         int i = 0;
         for (final OurBrick brick : bricksList.getItems()) {
             final int finalI = i;
@@ -80,6 +87,7 @@ public class OurBricksDataProvider {
 
         //Reset buttons with no models found
         //TODO this hardcoded 4 should come from a constant and be used in OurBricksJPanel
+        //TODO 4 is a magic number!!!!!
         for (;i < 4; i++){
             
             final int finalI = i;

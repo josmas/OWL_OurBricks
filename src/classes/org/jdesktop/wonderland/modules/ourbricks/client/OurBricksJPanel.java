@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import org.jdesktop.wonderland.client.jme.dnd.FileListDataFlavorHandler;
-import org.jdesktop.wonderland.client.jme.dnd.URLDataFlavorHandler;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
 /**
  *
@@ -32,20 +32,24 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     private OurBricksList bricksList;;
     //TODO this hardcoded 4 should come from a constant and be used in OurBricksDataProvider
+    //TODO 4 is a magic number here too!
     private JButton[] buttonArray = new JButton[4];
     private JLabel[] labelArray = new JLabel[4];
+    private final OurBricksDataProvider dataProvider;
 
     /** Creates new form OurBricksJPanel */
-    public OurBricksJPanel() {
+    public OurBricksJPanel(OurBricksURLGateway gateway) {
         
         initComponents();
+        this.dataProvider = new OurBricksDataProvider(gateway);
+
         search(null, null);
         
     }
 
     private void search(String query, Integer next){
         try {
-            bricksList = OurBricksDataProvider.requestDataFromExternalService(query, next); //On error just return an empty list for now.
+            bricksList = dataProvider.requestDataFromExternalService(query, next); //On error just return an empty list for now.
         } catch (MalformedURLException ex) {
             Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
             bricksList = new OurBricksList();
@@ -54,7 +58,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             bricksList = new OurBricksList();
         }
         addButtonsAndLabelsToArray();
-        OurBricksDataProvider.setButtonData(bricksList, buttonArray, labelArray);
+        dataProvider.setButtonData(bricksList, buttonArray, labelArray);
         enableNavigation();
     }
 

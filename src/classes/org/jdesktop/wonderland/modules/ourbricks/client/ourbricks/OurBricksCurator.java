@@ -16,6 +16,6 @@ public class OurBricksCurator {
                     curatedList.add(brick);
         }
 
-        return new OurBricksList(brickList.getNext_start(), curatedList, brickList.getPrev_start());
+        return new OurBricksList(brickList.getPrev_start(), curatedList, brickList.getNext_start());
     }
 }

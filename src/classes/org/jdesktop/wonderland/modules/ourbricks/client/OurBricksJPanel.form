@@ -181,6 +181,9 @@
                   <Connection code="listModel" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="bricksJListValueChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList()"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bricksJList.setCellRenderer(new OurBricksCellRenderer());"/>

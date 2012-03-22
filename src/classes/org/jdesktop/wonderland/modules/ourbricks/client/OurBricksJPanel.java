@@ -37,8 +37,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         initComponents();
         this.dataProvider = new OurBricksDataProvider(gateway);
 
-        search(null, null);
-        
+        search(null, null);        
     }
 
     private void search(String query, Integer next){
@@ -186,6 +185,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jPanel2.setToolTipText("Results");
 
         bricksJList.setModel(listModel);
+        bricksJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                bricksJListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(bricksJList);
 
         jTextArea1.setColumns(20);
@@ -257,6 +261,16 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         searchTextField.setText("");
         search(null, null);
     }//GEN-LAST:event_allModelsActionPerformed
+
+    private void bricksJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_bricksJListValueChanged
+        boolean adjust = evt.getValueIsAdjusting();
+        System.out.println(", Adjusting? " + adjust);
+        if (!adjust) {
+            System.out.println("Name is: " + bricksList.getItems().get(evt.getFirstIndex()).getTitle());
+            System.out.println("Download Link is: " + bricksList.getItems().get(evt.getFirstIndex()).getDownload_link());
+            importModel( bricksList.getItems().get(evt.getFirstIndex()).getDownload_link(), bricksList.getItems().get(evt.getFirstIndex()).getTitle() );
+        }
+    }//GEN-LAST:event_bricksJListValueChanged
 
     private void handleSearch(){
         if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {

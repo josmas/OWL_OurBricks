@@ -38,6 +38,8 @@ Tests
 -----
 Make sense of the use of Mocks for the connection to the web server.
 
+Separate tests that really touch the network.
+
 
 WorkFlow out of Wonderland: To make things easier, instead of deploying every
 single change to an OWL server I am running the JPanel on its own using the

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import static org.junit.Assert.*;
@@ -16,7 +11,6 @@ import org.junit.Test;
  */
 public class OurBricksDataProviderTest {
 
-    //TODO this test touches external resources (file system) Separate as an Integration test!
     @Test
     public void testfileToImport() throws Exception{
 

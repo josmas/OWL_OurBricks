@@ -61,6 +61,7 @@ public class OurBricksURLGateway implements OurBricksGateway {
         return results;
     }
 
+    //TODO this is not responsibility of the data provider <-- delegate
     public File getBrickFile(URL remoteURL, String modelName) throws MalformedURLException, IOException {
 
         File result = new File(System.getProperty("java.io.tmpdir")

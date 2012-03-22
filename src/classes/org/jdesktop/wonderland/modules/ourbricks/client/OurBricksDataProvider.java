@@ -129,6 +129,7 @@ public class OurBricksDataProvider {
         return gate.getBrickFile(new URL(fileURL), modelName);
     }
 
+    //TODO this is not responsibily of the provider <-- move it!
     public static File unzipBrickFile(File brickZipFile, String destination) throws IOException {
         File destinationFile = new File(destination);
         destinationFile.mkdirs();

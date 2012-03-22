@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 import java.math.BigDecimal;
 

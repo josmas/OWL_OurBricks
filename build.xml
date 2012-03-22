@@ -54,10 +54,13 @@
     <property name="test.lib" value="lib_test" />
     <property name="test.classes" value="src/test" />
     <property name="test.compiled.classes" value="build/test" />
+    <property name="integrationtest.classes" value="src/integrationtest" />
+    <property name="integrationtest.compiled.classes" value="build/integrationtest" />
 
 
     <path id="test.classpath">
         <pathelement location="${test.compiled.classes}" />
+        <pathelement location="${integrationtest.compiled.classes}" />
         <pathelement location="${build.classes.dir}" />
         <fileset dir="${test.lib}">
             <include name="**/*.jar"/>
@@ -68,12 +71,22 @@
     </path>
 
     <target name="compile-tests" depends="build">
+
+        <!-- Unit tests -->
         <mkdir dir="${test.compiled.classes}"/>
         <javac srcdir="${test.classes}" destdir="${test.compiled.classes}">
             <classpath refid="test.classpath"/>
         </javac>
+
+        <!-- Integration tests -->
+        <mkdir dir="${integrationtest.compiled.classes}"/>
+        <javac srcdir="${integrationtest.classes}" destdir="${integrationtest.compiled.classes}">
+            <classpath refid="test.classpath"/>
+        </javac>
         <copy todir="build/classes/org/jdesktop/wonderland/modules/ourbricks/client">
-            <fileset dir="src/classes/org/jdesktop/wonderland/modules/ourbricks/client/" />
+            <fileset dir="src/classes/org/jdesktop/wonderland/modules/ourbricks/client/">
+                <include name="**/*.properties"/>
+            </fileset>
         </copy>
     </target>
 
@@ -83,6 +96,16 @@
             <classpath refid="test.classpath" />
             <batchtest>
                 <fileset dir="${test.compiled.classes}" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="integrationtest" depends="compile-tests">
+        <junit fork="yes" haltonfailure="yes">
+            <formatter type="plain" usefile="false" />
+            <classpath refid="test.classpath" />
+            <batchtest>
+                <fileset dir="${integrationtest.compiled.classes}" includes="**/*Test.class" />
             </batchtest>
         </junit>
     </target>

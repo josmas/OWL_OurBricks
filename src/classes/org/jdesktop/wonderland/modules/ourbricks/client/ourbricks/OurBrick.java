@@ -13,24 +13,6 @@ import java.math.BigDecimal;
  * @author jos
  */
 
-// Output example
-//    {
-//        "prev_start": null,
-//        "items": [
-//            {   "price": null,
-//                "thumbnail_link": "http://vu.ourbricks.com/6e2dd650eaa7832d88f4e8b70e3db611/processed/ourbricksThumb.jpg",
-//                "username": "danx0r",
-//                "description": "testing navigation",
-//                "download_link": "http://vu.ourbricks.com/6e2dd650eaa7832d88f4e8b70e3db611/processed/ourbricks.zip",
-//                "title": "kataspace main scene",
-//                "viewer_link": "http://ourbricks.com/viewer/6e2dd650eaa7832d88f4e8b70e3db611",
-//                "author": "",
-//                "license_code": "ccby",
-//                "id": "6e2dd650eaa7832d88f4e8b70e3db611"
-//            }    ],
-//        "next_start": 1
-//    }
-
 public class OurBrick {
 
     public OurBrick() {
@@ -44,6 +26,7 @@ public class OurBrick {
     private String viewer_link;
     private String author;
     private String license_code;
+    private TechnicalDetails technical_details;
     private String id;
 
     public String getAuthor() {
@@ -60,6 +43,10 @@ public class OurBrick {
 
     public String getLicense_code() {
         return license_code;
+    }
+
+    public TechnicalDetails getTechnical_details() {
+        return technical_details;
     }
 
     public BigDecimal getPrice() {
@@ -82,4 +69,57 @@ public class OurBrick {
         return viewer_link;
     }
 
+    public static class TechnicalDetails {
+
+        private String num_normals;
+        private String num_triangles;
+        private String num_effects;
+        private String num_texcoords;
+        private String texture_ram;
+        private String draw_calls_raw;
+        private String num_textures;
+        private String draw_calls_with_material_batching;
+        private String num_vertices;
+        private String draw_calls_with_instance_batching;
+
+        public String getDraw_calls_raw() {
+            return draw_calls_raw;
+        }
+
+        public String getDraw_calls_with_instance_batching() {
+            return draw_calls_with_instance_batching;
+        }
+
+        public String getDraw_calls_with_material_batching() {
+            return draw_calls_with_material_batching;
+        }
+
+        public String getNum_effects() {
+            return num_effects;
+        }
+
+        public String getNum_normals() {
+            return num_normals;
+        }
+
+        public String getNum_texcoords() {
+            return num_texcoords;
+        }
+
+        public String getNum_textures() {
+            return num_textures;
+        }
+
+        public String getNum_triangles() {
+            return num_triangles;
+        }
+
+        public String getNum_vertices() {
+            return num_vertices;
+        }
+
+        public String getTexture_ram() {
+            return texture_ram;
+        }
+    }
 }

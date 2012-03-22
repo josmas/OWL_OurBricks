@@ -65,9 +65,6 @@
         <fileset dir="${test.lib}">
             <include name="**/*.jar"/>
         </fileset>
-       <!-- <fileset dir="${wonderland.dir}/core/build/lib">
-            <include name="**/*.jar"/>
-        </fileset>-->
     </path>
 
     <target name="compile-tests" depends="build">

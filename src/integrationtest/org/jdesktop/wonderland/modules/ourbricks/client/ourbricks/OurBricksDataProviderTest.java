@@ -15,7 +15,7 @@ public class OurBricksDataProviderTest {
     public void testfileToImport() throws Exception{
 
         String modelName = "scene2";
-        File brickZipFile = OurBricksDataProvider.fileToImport("http://vu.ourbricks.com/65affc69f210a6acaab21378eca21b08/processed/ourbricks.zip", modelName);
+        File brickZipFile = (new OurBricksDataProvider(new OurBricksURLGateway())).fileToImport("http://vu.ourbricks.com/65affc69f210a6acaab21378eca21b08/processed/ourbricks.zip", modelName);
         assertNotNull(brickZipFile);
         assertEquals("export.dae", brickZipFile.getName());
     }

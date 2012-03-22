@@ -110,7 +110,7 @@ public class OurBricksDataProvider {
         }
     }
 
-    public static File fileToImport(String fileURL, String modelName) throws MalformedURLException, IOException {
+    public File fileToImport(String fileURL, String modelName) throws MalformedURLException, IOException {
 
         File brickZipFile = requestFileFromExternalService(fileURL, modelName);
         String folderToUnzip = System.getProperty("java.io.tmpdir")
@@ -122,9 +122,7 @@ public class OurBricksDataProvider {
         return findDaeFile(unzippedFile);
     }
     
-    public static File requestFileFromExternalService(String fileURL, String modelName) throws MalformedURLException, IOException {
-
-        OurBricksGateway gate = new OurBricksURLGateway();
+    private File requestFileFromExternalService(String fileURL, String modelName) throws MalformedURLException, IOException {
 
         return gate.getBrickFile(new URL(fileURL), modelName);
     }

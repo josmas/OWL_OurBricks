@@ -97,7 +97,7 @@
         </junit>
     </target>
 
-    <target name="integrationtest" depends="compile-tests">
+    <target name="integration-test" depends="compile-tests">
         <junit fork="yes" haltonfailure="yes">
             <formatter type="plain" usefile="false" />
             <classpath refid="test.classpath" />
@@ -106,5 +106,7 @@
             </batchtest>
         </junit>
     </target>
+
+    <target name="all-test" depends="compile-tests, test, integration-test"/>
 
 </project>

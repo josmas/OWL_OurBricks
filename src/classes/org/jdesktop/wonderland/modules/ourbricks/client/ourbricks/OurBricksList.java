@@ -58,5 +58,8 @@ public class OurBricksList {
         return this.items.isEmpty();
     }
 
+    public int size(){
+        return this.items.size();
+    }
     
 }

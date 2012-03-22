@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
 import org.jdesktop.wonderland.client.jme.dnd.FileListDataFlavorHandler;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBrick;
+import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksCellRenderer;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGateway;
 
@@ -24,16 +25,15 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksURLGa
  * @author jos
  */
 public class OurBricksJPanel extends javax.swing.JPanel {
-    public static final int NUMBER_OF_BUTTONS = 4;
 
     private OurBricksList bricksList;
-    private JButton[] buttonArray = new JButton[NUMBER_OF_BUTTONS];
-    private JLabel[] labelArray = new JLabel[NUMBER_OF_BUTTONS];
     private final OurBricksDataProvider dataProvider;
+    public OurBrick[] bricks;
+    private DefaultListModel listModel;
 
     /** Creates new form OurBricksJPanel */
     public OurBricksJPanel(OurBricksURLGateway gateway) {
-        
+        this.listModel = new DefaultListModel();
         initComponents();
         this.dataProvider = new OurBricksDataProvider(gateway);
 
@@ -51,9 +51,12 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             Logger.getLogger(OurBricksJPanel.class.getName()).log(Level.SEVERE, null, ex);
             bricksList = new OurBricksList();
         }
-        addButtonsAndLabelsToArray();
-        dataProvider.setButtonData(bricksList, buttonArray, labelArray);
         enableNavigation();
+        listModel.clear();
+        for (OurBrick brick : bricksList.getItems()) {
+            listModel.addElement(brick);    
+        }
+
     }
 
     private void searchFromOffset(Integer offset){
@@ -63,17 +66,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             search(null, offset);
         else
             search(searchTextField.getText(), offset);
-    }
-
-    /**
-     * Adding all buttons to and array so that they can be manipulated automatically
-     */
-    private void addButtonsAndLabelsToArray(){
-        buttonArray[0] = jButton1; buttonArray[1] = jButton2; 
-        buttonArray[2] = jButton3; buttonArray[3] = jButton4;
-
-        labelArray[0] = jLabel1; labelArray[1] = jLabel2;
-        labelArray[2] = jLabel3; labelArray[3] = jLabel4;
     }
 
     private void enableNavigation(){
@@ -107,21 +99,14 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         allModels = new javax.swing.JButton();
         jLabelSearch = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        button1Panel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        button2Panel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        button3Panel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        button4Panel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         previous = new javax.swing.JButton();
         next = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bricksJList = new javax.swing.JList();
+        bricksJList.setCellRenderer(new OurBricksCellRenderer());
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setAutoscrolls(true);
 
@@ -150,164 +135,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 387, Short.MAX_VALUE)
-                .addComponent(allModels)
-                .addGap(63, 63, 63))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabelSearch)
-                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(searchButton)
-                .addComponent(allModels))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
-        jPanel2.setToolTipText("Results");
-
-        jLabel1.setText("no model found");
-
-        jButton1.setText("jButton1");
-        jButton1.setMaximumSize(new java.awt.Dimension(200, 133));
-        jButton1.setMinimumSize(new java.awt.Dimension(200, 133));
-        jButton1.setPreferredSize(new java.awt.Dimension(200, 133));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout button1PanelLayout = new javax.swing.GroupLayout(button1Panel);
-        button1Panel.setLayout(button1PanelLayout);
-        button1PanelLayout.setHorizontalGroup(
-            button1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button1PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(button1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap())
-        );
-        button1PanelLayout.setVerticalGroup(
-            button1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button1PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel2.setText("no model found");
-
-        jButton2.setText("jButton2");
-        jButton2.setMaximumSize(new java.awt.Dimension(200, 133));
-        jButton2.setMinimumSize(new java.awt.Dimension(200, 133));
-        jButton2.setPreferredSize(new java.awt.Dimension(200, 133));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout button2PanelLayout = new javax.swing.GroupLayout(button2Panel);
-        button2Panel.setLayout(button2PanelLayout);
-        button2PanelLayout.setHorizontalGroup(
-            button2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button2PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(button2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        button2PanelLayout.setVerticalGroup(
-            button2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button2PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel3.setText("no model found");
-
-        jButton3.setText("jButton3");
-        jButton3.setMaximumSize(new java.awt.Dimension(200, 133));
-        jButton3.setMinimumSize(new java.awt.Dimension(200, 133));
-        jButton3.setPreferredSize(new java.awt.Dimension(200, 133));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout button3PanelLayout = new javax.swing.GroupLayout(button3Panel);
-        button3Panel.setLayout(button3PanelLayout);
-        button3PanelLayout.setHorizontalGroup(
-            button3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button3PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(button3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        button3PanelLayout.setVerticalGroup(
-            button3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button3PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel4.setText("no model found");
-
-        jButton4.setText("jButton4");
-        jButton4.setMaximumSize(new java.awt.Dimension(200, 133));
-        jButton4.setMinimumSize(new java.awt.Dimension(200, 133));
-        jButton4.setPreferredSize(new java.awt.Dimension(200, 133));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout button4PanelLayout = new javax.swing.GroupLayout(button4Panel);
-        button4Panel.setLayout(button4PanelLayout);
-        button4PanelLayout.setHorizontalGroup(
-            button4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button4PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(button4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap())
-        );
-        button4PanelLayout.setVerticalGroup(
-            button4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(button4PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4))
-        );
-
         previous.setText("Previous");
         previous.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,53 +149,71 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelSearch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchButton)
+                .addGap(73, 73, 73)
+                .addComponent(previous)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(next)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(allModels)
+                .addGap(126, 126, 126))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {next, previous});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabelSearch)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton)
+                .addComponent(previous)
+                .addComponent(next)
+                .addComponent(allModels))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
+        jPanel2.setToolTipText("Results");
+
+        bricksJList.setModel(listModel);
+        jScrollPane1.setViewportView(bricksJList);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Data about the model \nchosen");
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(button1Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button2Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(previous)
-                        .addGap(31, 31, 31)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(button3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(next))))
-        );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {next, previous});
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {button3Panel, button4Panel});
-
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(button2Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button1Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button3Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(previous)
-                            .addComponent(next)))
-                    .addComponent(button4Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {button2Panel, button3Panel, button4Panel});
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -376,13 +221,10 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(36, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,16 +236,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        importModel( bricksList.getItems().get(0).getDownload_link(), bricksList.getItems().get(0).getTitle() );
-//        importModel( "http://localhost/drupal/ourbricks.zip", "scene2" );
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //TODO Change the harcoded item numbers
-        importModel( bricksList.getItems().get(1).getDownload_link(), bricksList.getItems().get(1).getTitle() );
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
         handleSearch();
@@ -426,14 +258,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         search(null, null);
     }//GEN-LAST:event_allModelsActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        importModel( bricksList.getItems().get(3).getDownload_link() , bricksList.getItems().get(3).getTitle() );
-}//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        importModel( bricksList.getItems().get(2).getDownload_link(), bricksList.getItems().get(2).getTitle() );
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void handleSearch(){
         if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
             search(searchTextField.getText(), null);
@@ -444,7 +268,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private void importModel(String urlOfModel, String modelName){
         
         try {
-            File fileToImport = OurBricksDataProvider.fileToImport(urlOfModel, modelName);
+            File fileToImport = dataProvider.fileToImport(urlOfModel, modelName);
 
             if (fileToImport != null){
                 List<File> fileList = new ArrayList<File>();
@@ -465,21 +289,13 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allModels;
-    private javax.swing.JPanel button1Panel;
-    private javax.swing.JPanel button2Panel;
-    private javax.swing.JPanel button3Panel;
-    private javax.swing.JPanel button4Panel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JList bricksJList;
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton next;
     private javax.swing.JButton previous;
     private javax.swing.JButton searchButton;

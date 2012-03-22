@@ -1,5 +1,13 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
+import java.awt.Color;
+import java.awt.Component;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -23,6 +31,11 @@ public class OurBrick {
     private String license_code;
     private TechnicalDetails technical_details;
     private String id;
+
+    @Override
+    public String toString(){
+        return title;
+    }
 
     public String getAuthor() {
         return author;

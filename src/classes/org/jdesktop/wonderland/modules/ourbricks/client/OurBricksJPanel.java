@@ -30,6 +30,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private final OurBricksDataProvider dataProvider;
     public OurBrick[] bricks;
     private DefaultListModel listModel;
+    private String selectedBrickTitle = "";
+    private String selectedBrickDownloadLink = "";
 
     /** Creates new form OurBricksJPanel */
     public OurBricksJPanel(OurBricksURLGateway gateway) {
@@ -106,6 +108,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         bricksJList.setCellRenderer(new OurBricksCellRenderer());
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        importButton = new javax.swing.JButton();
 
         setAutoscrolls(true);
 
@@ -197,6 +200,14 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jTextArea1.setText("Data about the model \nchosen");
         jScrollPane2.setViewportView(jTextArea1);
 
+        importButton.setText("Import");
+        importButton.setEnabled(false);
+        importButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -205,7 +216,9 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
                 .addGap(39, 39, 39)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(importButton))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -213,7 +226,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addComponent(importButton)
+                        .addGap(67, 67, 67)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
                 .addContainerGap())
@@ -268,9 +282,16 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         if (!adjust) {
             System.out.println("Name is: " + bricksList.getItems().get(evt.getFirstIndex()).getTitle());
             System.out.println("Download Link is: " + bricksList.getItems().get(evt.getFirstIndex()).getDownload_link());
-            importModel( bricksList.getItems().get(evt.getFirstIndex()).getDownload_link(), bricksList.getItems().get(evt.getFirstIndex()).getTitle() );
+            selectedBrickDownloadLink = bricksList.getItems().get(evt.getFirstIndex()).getDownload_link();
+            selectedBrickTitle = bricksList.getItems().get(evt.getFirstIndex()).getTitle();
+            importButton.setEnabled(true);
         }
     }//GEN-LAST:event_bricksJListValueChanged
+
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
+        importModel( selectedBrickDownloadLink, selectedBrickTitle );
+        importButton.setEnabled(false);
+    }//GEN-LAST:event_importButtonActionPerformed
 
     private void handleSearch(){
         if ( searchTextField.getText() != null && !searchTextField.getText().equals("")) {
@@ -304,6 +325,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allModels;
     private javax.swing.JList bricksJList;
+    private javax.swing.JButton importButton;
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

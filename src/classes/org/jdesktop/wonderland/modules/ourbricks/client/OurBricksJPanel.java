@@ -105,9 +105,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         bricksJList = new javax.swing.JList();
-        bricksJList.setCellRenderer(new OurBricksCellRenderer());
         bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         importButton = new javax.swing.JButton();
@@ -189,7 +187,11 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
         jPanel2.setToolTipText("Results");
 
+        bricksJList.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bricksJList.setModel(listModel);
+        bricksJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        bricksJList.setCellRenderer(new OurBricksCellRenderer());
+        bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         bricksJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 bricksJListValueChanged(evt);

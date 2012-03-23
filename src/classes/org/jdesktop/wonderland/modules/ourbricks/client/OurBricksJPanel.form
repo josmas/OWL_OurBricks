@@ -181,16 +181,26 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="bricksJList">
               <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
+                </Property>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="listModel" type="code"/>
                 </Property>
+                <Property name="selectionMode" type="int" value="1"/>
+                <Property name="cellRenderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new OurBricksCellRenderer()" type="code"/>
+                </Property>
+                <Property name="layoutOrientation" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="bricksJListValueChanged"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList()"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bricksJList.setCellRenderer(new OurBricksCellRenderer());&#xa;bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));&#xa;bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));"/>
               </AuxValues>
             </Component>
           </SubComponents>

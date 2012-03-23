@@ -106,6 +106,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         bricksJList = new javax.swing.JList();
         bricksJList.setCellRenderer(new OurBricksCellRenderer());
+        bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         importButton = new javax.swing.JButton();

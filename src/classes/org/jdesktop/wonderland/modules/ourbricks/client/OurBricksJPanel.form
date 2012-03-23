@@ -190,7 +190,7 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList()"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bricksJList.setCellRenderer(new OurBricksCellRenderer());"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="bricksJList.setCellRenderer(new OurBricksCellRenderer());&#xa;bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));&#xa;bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);"/>
               </AuxValues>
             </Component>
           </SubComponents>

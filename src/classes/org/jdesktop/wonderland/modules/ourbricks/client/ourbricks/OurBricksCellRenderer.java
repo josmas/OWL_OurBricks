@@ -15,7 +15,7 @@ import javax.swing.ListCellRenderer;
  */
 public class OurBricksCellRenderer extends JLabel implements ListCellRenderer {
 
-    private static final Color HIGHLIGHT_COLOR = new Color(0, 0, 128);
+    private static final Color HIGHLIGHT_COLOR = new Color(0, 0, 208);
 
     public OurBricksCellRenderer() {
         setOpaque(true);
@@ -25,7 +25,8 @@ public class OurBricksCellRenderer extends JLabel implements ListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         OurBrick brick = (OurBrick) value;
-        setText(brick.getTitle());
+        String warning = calculateWarnings(brick);
+        setText("<html>Model: " + brick.getTitle() + "<br> License: " + brick.getLicense_code() + "<br>" + warning + "</html>");
         try {
             setIcon(new javax.swing.ImageIcon(new java.net.URL(brick.getThumbnail_link())));
         } catch (MalformedURLException ex) {
@@ -38,6 +39,17 @@ public class OurBricksCellRenderer extends JLabel implements ListCellRenderer {
             setBackground(Color.white);
             setForeground(Color.black);
         }
+        if (!warning.equals(""))
+            setForeground(Color.red);
         return this;
+    }
+
+    private String calculateWarnings(OurBrick brick) {
+        if ( brick.getTechnical_details().getNum_triangles() == null ||
+             Integer.parseInt(brick.getTechnical_details().getNum_triangles()) > 200000 ||
+             Integer.parseInt(brick.getTechnical_details().getTexture_ram()) > 20000 ||
+             Integer.parseInt(brick.getTechnical_details().getNum_vertices()) > 200000 )
+            return "Model NOT recommended";
+        return "";
     }
 }

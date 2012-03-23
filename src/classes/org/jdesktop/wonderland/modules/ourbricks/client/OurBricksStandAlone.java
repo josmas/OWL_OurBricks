@@ -17,7 +17,7 @@ public class OurBricksStandAlone extends javax.swing.JFrame {
     JPanel panel = new OurBricksJPanel(new OurBricksURLGateway());
 
     public OurBricksStandAlone() {
-        this.setSize(1000, 400);
+        this.setSize(1000, 550);
         this.add(panel);
         
     }

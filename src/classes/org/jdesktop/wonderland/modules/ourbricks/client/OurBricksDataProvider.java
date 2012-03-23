@@ -15,7 +15,7 @@ import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksGatew
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksList;
 
 public class OurBricksDataProvider {
-    public static final int SEARCH_LIMIT = 4;
+    public static final int SEARCH_LIMIT = 8;
 
     private final OurBricksGateway gate;
 

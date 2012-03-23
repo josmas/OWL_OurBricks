@@ -2,33 +2,32 @@ package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 /**
  *
  * @author jos
  */
-public class OurBricksCellRenderer extends JLabel implements ListCellRenderer {
+public class OurBricksCellRenderer extends DefaultListCellRenderer {
 
     private static final Color HIGHLIGHT_COLOR = new Color(0, 0, 208);
 
-    public OurBricksCellRenderer() {
-        setOpaque(true);
-        setIconTextGap(12);
-    }
-
+    @Override
     public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
+        Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
         OurBrick brick = (OurBrick) value;
         String warning = calculateWarnings(brick);
-        setText("<html>Model: " + brick.getTitle() + "<br> License: " + brick.getLicense_code() + "<br>" + warning + "</html>");
+        ((JLabel) c).setText("<html>Model: " + brick.getTitle() + "<br> License: " + brick.getLicense_code() + "<br>" + warning + "</html>");
         try {
-            setIcon(new javax.swing.ImageIcon(new java.net.URL(brick.getThumbnail_link())));
+            ((JLabel) c).setIcon(new javax.swing.ImageIcon(new java.net.URL(brick.getThumbnail_link())));
         } catch (MalformedURLException ex) {
             Logger.getLogger(OurBricksCellRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,7 +40,10 @@ public class OurBricksCellRenderer extends JLabel implements ListCellRenderer {
         }
         if (!warning.equals(""))
             setForeground(Color.red);
-        return this;
+        
+        ((JLabel) c).setToolTipText(brick.getTitle());
+
+        return c;
     }
 
     private String calculateWarnings(OurBrick brick) {

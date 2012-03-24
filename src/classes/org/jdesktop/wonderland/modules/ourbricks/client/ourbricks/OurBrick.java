@@ -1,13 +1,6 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
-import java.awt.Color;
-import java.awt.Component;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -31,6 +24,15 @@ public class OurBrick {
     private String license_code;
     private TechnicalDetails technical_details;
     private String id;
+    private ImageIcon icon; // Not part of the JSON structure but filled in on list rendering
+
+    public ImageIcon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(ImageIcon icon) {
+        this.icon = icon;
+    }
 
     @Override
     public String toString(){

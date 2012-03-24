@@ -44,21 +44,26 @@ public class OurBricksDataProvider {
         return bricksList;
     }
 
-    public File fileToImport(String fileURL, String modelName) throws MalformedURLException, IOException {
+    //TODO Leaving these comments for this partial commit -- Fix the import situation before pushing to remote
+//    public File fileToImport(String fileURL, String modelName, OurBricksJPanel panel) throws MalformedURLException, IOException {
+    public void fileToImport(String fileURL, String modelName, OurBricksJPanel panel) throws MalformedURLException, IOException {
 
-        File brickZipFile = requestFileFromExternalService(fileURL, modelName);
+//        File brickZipFile = requestFileFromExternalService(fileURL, modelName, panel);
+        requestFileFromExternalService(fileURL, modelName, panel);
         String folderToUnzip = System.getProperty("java.io.tmpdir")
                 + System.getProperty("file.separator") + modelName
                 + System.getProperty("file.separator") + modelName + "_unzipped";
 
-        File unzippedFile = unzipBrickFile(brickZipFile, folderToUnzip);
-
-        return findDaeFile(unzippedFile);
+        //TODO ADD BACK THESE TWO STEPS WHEN I HAVE A CHANCE OF GETTING BACK THE NAME OF THE FILE
+        // DO I need two buttons: download + import ?
+//        File unzippedFile = unzipBrickFile(brickZipFile, folderToUnzip);
+//
+//        return findDaeFile(unzippedFile);
     }
     
-    private File requestFileFromExternalService(String fileURL, String modelName) throws MalformedURLException, IOException {
+    private void requestFileFromExternalService(String fileURL, String modelName, OurBricksJPanel panel) throws MalformedURLException, IOException {
 
-        return gate.getBrickFile(new URL(fileURL), modelName);
+        gate.getBrickFile(new URL(fileURL), modelName, panel);
     }
 
     //TODO this is not responsibily of the provider <-- move it!

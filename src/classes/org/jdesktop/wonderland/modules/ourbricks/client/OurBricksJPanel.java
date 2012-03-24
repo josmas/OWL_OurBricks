@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JProgressBar;
 import org.jdesktop.wonderland.client.jme.dnd.FileListDataFlavorHandler;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBrick;
 import org.jdesktop.wonderland.modules.ourbricks.client.ourbricks.OurBricksCellRenderer;
@@ -54,9 +56,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         }
         enableNavigation();
         listModel.clear();
-        for (OurBrick brick : bricksList.getItems()) {
-            listModel.addElement(brick);    
-        }
+        //Offload loading to a SwingWorker
+        new OurBricksLoadWorker(bricksList, listModel, this).execute();
 
     }
 
@@ -85,6 +86,16 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             previous.setEnabled(false);
         }
     }
+
+    public JProgressBar getImportBar() {
+        return importBar;
+    }
+
+    public JButton getImportButton() {
+        return importButton;
+    }
+
+
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -106,9 +117,8 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         bricksJList = new javax.swing.JList();
         bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         importButton = new javax.swing.JButton();
+        importBar = new javax.swing.JProgressBar();
 
         setAutoscrolls(true);
 
@@ -166,7 +176,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addComponent(previous)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(next)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(allModels)
                 .addGap(126, 126, 126))
         );
@@ -187,10 +197,10 @@ public class OurBricksJPanel extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Results"));
         jPanel2.setToolTipText("Results");
 
-        bricksJList.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bricksJList.setModel(listModel);
-        bricksJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        bricksJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         bricksJList.setCellRenderer(new OurBricksCellRenderer());
+        bricksJList.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bricksJList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         bricksJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -198,11 +208,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(bricksJList);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Data about the model \nchosen");
-        jScrollPane2.setViewportView(jTextArea1);
 
         importButton.setText("Import");
         importButton.setEnabled(false);
@@ -218,23 +223,23 @@ public class OurBricksJPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE)
-                .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(importButton))
-                .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(importButton)
+                        .addGap(27, 27, 27)
+                        .addComponent(importBar, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(importButton)
-                        .addGap(67, 67, 67)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(importButton)
+                    .addComponent(importBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -245,7 +250,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -254,7 +259,7 @@ public class OurBricksJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -294,7 +299,6 @@ public class OurBricksJPanel extends javax.swing.JPanel {
 
     private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
         importModel( selectedBrickDownloadLink, selectedBrickTitle );
-        importButton.setEnabled(false);
     }//GEN-LAST:event_importButtonActionPerformed
 
     private void handleSearch(){
@@ -307,8 +311,10 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     private void importModel(String urlOfModel, String modelName){
         
         try {
-            File fileToImport = dataProvider.fileToImport(urlOfModel, modelName);
-
+//            File fileToImport = dataProvider.fileToImport(urlOfModel, modelName, this);
+            //TODO this method used to download + import. Now downloads only so have to hook back the importing bit below
+            dataProvider.fileToImport(urlOfModel, modelName, this);
+            File fileToImport = null; //TODO not importing for now!
             if (fileToImport != null){
                 List<File> fileList = new ArrayList<File>();
                 fileList.add(fileToImport);
@@ -329,13 +335,12 @@ public class OurBricksJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allModels;
     private javax.swing.JList bricksJList;
+    private javax.swing.JProgressBar importBar;
     private javax.swing.JButton importButton;
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton next;
     private javax.swing.JButton previous;
     private javax.swing.JButton searchButton;

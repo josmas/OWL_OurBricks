@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.jdesktop.wonderland.modules.ourbricks.client.OurBricksJPanel;
 
 /**
  *
@@ -67,6 +68,10 @@ public class OurBricksFAKEGateway implements OurBricksGateway {
     }
 
     public File getBrickFile(URL remoteURL, String modelName) throws MalformedURLException, IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void getBrickFile(URL remoteURL, String modelName, OurBricksJPanel panel) throws MalformedURLException, IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

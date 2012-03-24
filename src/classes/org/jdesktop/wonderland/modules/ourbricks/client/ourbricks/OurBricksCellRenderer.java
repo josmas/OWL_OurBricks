@@ -26,11 +26,9 @@ public class OurBricksCellRenderer extends DefaultListCellRenderer {
         OurBrick brick = (OurBrick) value;
         String warning = calculateWarnings(brick);
         ((JLabel) c).setText("<html>Model: " + brick.getTitle() + "<br> License: " + brick.getLicense_code() + "<br>" + warning + "</html>");
-        try {
-            ((JLabel) c).setIcon(new javax.swing.ImageIcon(new java.net.URL(brick.getThumbnail_link())));
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(OurBricksCellRenderer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ((JLabel) c).setIcon(brick.getIcon());
+        ((JLabel) c).setToolTipText(brick.getTitle());
+
         if (isSelected) {
             setBackground(HIGHLIGHT_COLOR);
             setForeground(Color.white);
@@ -40,8 +38,6 @@ public class OurBricksCellRenderer extends DefaultListCellRenderer {
         }
         if (!warning.equals(""))
             setForeground(Color.red);
-        
-        ((JLabel) c).setToolTipText(brick.getTitle());
 
         return c;
     }

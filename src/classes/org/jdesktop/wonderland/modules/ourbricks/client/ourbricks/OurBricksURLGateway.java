@@ -1,6 +1,8 @@
 package org.jdesktop.wonderland.modules.ourbricks.client.ourbricks;
 
 import com.google.gson.Gson;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,8 +12,11 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingWorker;
+import org.jdesktop.wonderland.modules.ourbricks.client.OurBricksJPanel;
 
 /**
  *
@@ -19,10 +24,11 @@ import java.util.logging.Logger;
  */
 public class OurBricksURLGateway implements OurBricksGateway {
 
-    private static final Logger LOGGER =
-            Logger.getLogger(OurBricksURLGateway.class.getName());
-    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(
-            "org.jdesktop.wonderland.modules.ourbricks.client.Bundle");
+    private File downloadedFile = null;
+
+    public File getDownloadedFile() {
+        return downloadedFile;
+    }
 
     /**
      * A networked request is sent to the external service. An stringified JSON
@@ -62,38 +68,80 @@ public class OurBricksURLGateway implements OurBricksGateway {
     }
 
     //TODO this is not responsibility of the data provider <-- delegate
-    public File getBrickFile(URL remoteURL, String modelName) throws MalformedURLException, IOException {
+    public void getBrickFile(final URL remoteURL, final String modelName, final OurBricksJPanel ourBricksJPanel) {
 
-        File result = new File(System.getProperty("java.io.tmpdir")
-                + System.getProperty("file.separator") + modelName
-                + System.getProperty("file.separator") + "ourbricks.zip");
-        result.mkdirs();
-        result.delete();
-        
-        URL url = remoteURL;
-        url.openConnection();
-        InputStream reader = url.openStream();
-
-        FileOutputStream writer = new FileOutputStream(result);
-        byte[] buffer = new byte[153600];
-        int totalBytesRead = 0;
-        int bytesRead = 0;
-
-
-        while ((bytesRead = reader.read(buffer)) > 0) {
-            writer.write(buffer, 0, bytesRead);
-            buffer = new byte[153600];
-            totalBytesRead += bytesRead;
+        if (ourBricksJPanel != null) {
+            ourBricksJPanel.getImportButton().setEnabled(false);
         }
+        SwingWorker worker = new SwingWorker<File, Void>() {
 
-        System.out.println("Done. " + (new Integer(totalBytesRead).toString()) + " bytes read.\n");
-        writer.close();
-        reader.close();
+            @Override
+            protected File doInBackground() throws MalformedURLException, IOException {
+                File result = new File(System.getProperty("java.io.tmpdir")
+                        + System.getProperty("file.separator") + modelName
+                        + System.getProperty("file.separator") + "ourbricks.zip");
+                result.mkdirs();
+                result.delete();
+                System.out.println("GONNA download the file to: " + result);
 
-        return result;
+                URL url = remoteURL;
+                URLConnection con = url.openConnection();
+                int lenghtOfFile = con.getContentLength();
+                InputStream reader = url.openStream();
+
+                FileOutputStream writer = new FileOutputStream(result);
+                byte[] buffer = new byte[153600];
+                int totalBytesRead = 0;
+                int bytesRead = 0;
+
+                while ((bytesRead = reader.read(buffer)) > 0) {
+                    writer.write(buffer, 0, bytesRead);
+                    buffer = new byte[153600];
+                    totalBytesRead += bytesRead;
+                    setProgress((int) (totalBytesRead * 100 / lenghtOfFile));
+                }
+
+                writer.close();
+                reader.close();
+                return result;
+            }
+
+            @Override
+            protected void done() {
+                if (ourBricksJPanel != null) {
+                    ourBricksJPanel.getImportBar().setValue(0);
+                }
+                try {
+                    downloadedFile = get();
+                    //TODO what to do with this result? can add to a list and make available in Panel
+                    System.out.println(downloadedFile.toString() + " has been downloaded");
+                } catch (InterruptedException ie) { //Ignore interruptions
+                } catch (ExecutionException ee) {
+                    String why = null;
+                    Throwable cause = ee.getCause();
+                    if (cause != null) {
+                        why = cause.getMessage();
+                    } else {
+                        why = ee.getMessage();
+                    }
+                    Logger.getLogger(OurBricksURLGateway.class.getName()).log(Level.SEVERE, why, ee);
+                }
+            }
+        };
+
+        PropertyChangeListener listener =
+                new PropertyChangeListener() {
+
+                    public void propertyChange(PropertyChangeEvent event) {
+                        if ("progress".equals(event.getPropertyName())) {
+                            if (ourBricksJPanel != null) {
+                                ourBricksJPanel.getImportBar().setValue((Integer) event.getNewValue());
+                            }
+                        }
+                    }
+                };
+        worker.addPropertyChangeListener(listener);
+        worker.execute();
 
     }
-
 }
-
-

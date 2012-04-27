@@ -27,12 +27,6 @@
                     <location>src/test</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
-                <source-folder>
-                    <label>src/integrationtest</label>
-                    <type>java</type>
-                    <location>src/integrationtest</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
             </folders>
             <ide-actions>
                 <action name="build">
@@ -59,12 +53,11 @@
                         <label>src/test</label>
                         <location>src/test</location>
                     </source-folder>
-                    <source-folder style="packages">
-                        <label>src/integrationtest</label>
-                        <location>src/integrationtest</location>
-                    </source-folder>
                     <source-file>
                         <location>build.xml</location>
+                    </source-file>
+                    <source-file>
+                        <location>my.module.properties</location>
                     </source-file>
                 </items>
                 <context-menu>
@@ -89,13 +82,7 @@
             <compilation-unit>
                 <package-root>src/test</package-root>
                 <unit-tests/>
-                <classpath mode="compile">lib_test/junit-4.8.2.jar:lib_test/mockito-all-1.8.5.jar:build/classes:lib/gson-1.7.1.jar:src/classes</classpath>
-                <source-level>1.5</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>src/integrationtest</package-root>
-                <unit-tests/>
-                <classpath mode="compile">lib_test/gson-1.7.1.jar:lib_test/junit-4.8.2.jar:lib_test/mockito-all-1.8.5.jar:build/classes:src/classes</classpath>
+                <classpath mode="compile">build/classes:lib/gson-1.7.1.jar:../../../wonderland/lib/test/junit.jar:../../../wonderland/lib/test/mockito-core.jar:../../../wonderland/lib/test/objenesis.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>

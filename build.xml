@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="${module-name}" default="dist" basedir=".">
+<project name="ourbricks" default="dist" basedir=".">
     <property file="my.module.properties"/>
 
     <!-- current directory needed in all scripts -->
-    <dirname property="current.dir" file="${ant.file.wonderland-${module.name}-module}"/>
+    <dirname property="current.dir" file="${ant.file.wonderland-ourbricks-module}"/>
     <property name="modules.dir" location="${wonderland.dir}/modules"/>
         
     <property name="module.src" value="${module.plugin.src}"/>
@@ -50,63 +50,30 @@
     <target name="deploy" depends="dist, -module-deploy"/>
     <target name="clean" depends="-module-clean"/>
 
-
-    <property name="test.lib" value="lib_test" />
-    <property name="test.classes" value="src/test" />
-    <property name="test.compiled.classes" value="build/test" />
-    <property name="integrationtest.classes" value="src/integrationtest" />
-    <property name="integrationtest.compiled.classes" value="build/integrationtest" />
-
-
-    <path id="test.classpath">
-        <pathelement location="${test.compiled.classes}" />
-        <pathelement location="${integrationtest.compiled.classes}" />
-        <pathelement location="${build.classes.dir}" />
-        <fileset dir="${test.lib}">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
-
-    <target name="compile-tests" depends="build">
-
-        <!-- Unit tests -->
-        <mkdir dir="${test.compiled.classes}"/>
-        <javac srcdir="${test.classes}" destdir="${test.compiled.classes}">
-            <classpath refid="test.classpath"/>
-        </javac>
-
-        <!-- Integration tests -->
-        <mkdir dir="${integrationtest.compiled.classes}"/>
-        <javac srcdir="${integrationtest.classes}" destdir="${integrationtest.compiled.classes}">
-            <classpath refid="test.classpath"/>
-        </javac>
-        <copy todir="build/classes/org/jdesktop/wonderland/modules/ourbricks/client">
-            <fileset dir="src/classes/org/jdesktop/wonderland/modules/ourbricks/client/">
-                <include name="**/*.properties"/>
-            </fileset>
-        </copy>
+    <target name="compile-test" depends="build, -module-compile-test"/>
+    <target name="test" depends="compile-test, unit-test, integration-test"/>
+    
+    <target name="unit-test">
+        <module-run-tests>
+            <tests>
+                <fileset dir="${build.dir}/test">
+                    <include name="**/*Test.class"/>
+                    <exclude name="**/OurBricksDataProviderTest.class"/>
+                    <exclude name="**/OurBricksURLGatewayTest.class"/>
+                </fileset>
+            </tests>
+        </module-run-tests>
     </target>
-
-    <target name="test" depends="compile-tests">
-        <junit fork="yes" haltonfailure="yes">
-            <formatter type="plain" usefile="false" />
-            <classpath refid="test.classpath" />
-            <batchtest>
-                <fileset dir="${test.compiled.classes}" includes="**/*Test.class" />
-            </batchtest>
-        </junit>
+    
+    <target name="integration-test">
+        <module-run-tests>
+            <tests>
+                <fileset dir="${build.dir}/test">
+                    <include name="**/OurBricksDataProviderTest.class"/>
+                    <include name="**/OurBricksURLGatewayTest.class"/>
+                </fileset>
+            </tests>
+        </module-run-tests>
     </target>
-
-    <target name="integration-test" depends="compile-tests">
-        <junit fork="yes" haltonfailure="yes">
-            <formatter type="plain" usefile="false" />
-            <classpath refid="test.classpath" />
-            <batchtest>
-                <fileset dir="${integrationtest.compiled.classes}" includes="**/*Test.class" />
-            </batchtest>
-        </junit>
-    </target>
-
-    <target name="all-test" depends="compile-tests, test, integration-test"/>
-
+    
 </project>
